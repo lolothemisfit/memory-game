@@ -1,0 +1,118 @@
+#container {
+  perspective: 1000px;
+}
+
+/* Hover & focus highlight for individual tiles (direct children) */
+#container > *:hover,
+#container > *:focus {
+  outline: 2px solid rgba(255, 235, 59, 0.95); /* yellowish */
+  box-shadow: 0 0 6px rgba(255, 235, 59, 0.12);
+  cursor: pointer;
+}
+
+/* Flipped - relies on per-page CSS to set initial transforms for front/back.
+   This toggles the visible faces. */
+/* --- TILE FLIP BASE STYLES --- */
+
+/* Make each tile a 3D flip container */
+#container > * {
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+  cursor: pointer;
+}
+
+/* Inner wrapper inside each tile */
+#container > * .inner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+
+/* inner wrapper: handles the 3D flip and transition */
+#container > * .inner {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+  will-change: transform;
+}
+
+#container > * .front,
+#container > * .back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background-size: cover;
+  background-position: center;
+}
+
+/* front shows by default */
+#container > * .front { transform: rotateY(0deg); }
+
+/* back is hidden by default */
+#container > * .back { transform: rotateY(180deg); }
+
+/* flipped class rotates the inner fully */
+#container > *.flipped .inner { transform: rotateY(180deg); }
+
+
+/* shake applied to inner so it shakes in place */
+@keyframes bm-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+
+/* when tile has shake class, animate inner only */
+#container > *.shake .inner {
+  animation: bm-shake 0.35s;
+}
+
+/* wrong & matched box-shadows (no layout shift) */
+#container > *.wrong { box-shadow: inset 0 0 0 3px rgba(231,76,60,0.95); }
+#container > *.matched { box-shadow: inset 0 0 0 3px rgba(46,204,113,0.95); }
+
+
+/* Small transition for tile (per-page sizes still control width/height) */
+#container > * {
+  position: absolute;
+  transition: transform 0.35s ease, border 0.2s ease;
+}
+
+/* overlay flexible styles (reuse) */
+#overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  display: none; /* JS shows it */
+  align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.7);
+  z-index: 9999;
+}
+.overlay-content {
+  background: #fff; padding: 5%; border-radius: 12px;
+  max-width: 90%; text-align: center; box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+/* scoreboard tiny styles */
+#scoreBoard table { width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; }
+#scoreBoard th, #scoreBoard td { border: 1px solid #ddd; padding: 6px; font-size: 0.9em; }
+#scoreBoard th { background:#f2f2f2; }
+
+/* responsive tweak */
+@media (max-width: 320px) {
+  .overlay-content { padding: 8px; }
+  #scoreBoard th, #scoreBoard td { padding: 4px; font-size: 0.8em; }
+}
+
+.button {
+  border-radius: 5px;
+  background-color : grey;
+}
+
+.button: hover {
+  background-color : #648fdf;
+}

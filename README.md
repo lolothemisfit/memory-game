@@ -31,3 +31,7 @@ This project improved my understanding of JavaScript event handling, DOM manipul
 - Custom card themes
 - Sound effects and background music
 - Multiplayer mode
+
+## Author
+
+Lelona Ntshiba
